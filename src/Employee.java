@@ -5,7 +5,7 @@ public class Employee {
     protected String NameSurname;
     protected LocalDate DateOfStart;
     protected LocalDate Birthdate;
-    protected double Paycheck;
+    protected double Paycheck = 0.0;
 
 
     public String getNID() {
@@ -35,4 +35,7 @@ public class Employee {
     public void setBirthdate(LocalDate birthdate) {
         Birthdate = birthdate;
     }
+
+
+
 }

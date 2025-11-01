@@ -11,4 +11,5 @@ public class Waiter extends Employee {
         Birthdate = Birthday;
         Paycheck = 500.0;
     }
+
 }
