@@ -3,7 +3,6 @@ import java.time.*;
 
 public class Waiter extends Employee {
 
-
     public Waiter(String nid, String nameSurname, LocalDate Birthday) {
         NID = nid;
         NameSurname = nameSurname;
