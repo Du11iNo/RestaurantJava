@@ -7,7 +7,6 @@ public class Employee {
     protected LocalDate Birthdate;
     protected double Paycheck = 0.0;
 
-
     public String getNID() {
         return NID;
     }
