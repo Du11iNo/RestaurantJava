@@ -28,10 +28,6 @@ public class Employee {
         return DateOfStart;
     }
 
-    public void setDateOfStart(LocalDate dateOfStart) {
-        DateOfStart = dateOfStart;
-    }
-
     public LocalDate getBirthdate() {
         return Birthdate;
     }
