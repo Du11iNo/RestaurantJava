@@ -9,7 +9,6 @@ public class Chef extends Employee{
         DateOfStart = LocalDate.now();
         Birthdate = Birthday;
         Paycheck = 1200.0;
-
     }
 
 
