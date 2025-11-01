@@ -35,4 +35,13 @@ public class Employee {
         Birthdate = birthdate;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "NID='" + NID + '\'' +
+                ", NameSurname='" + NameSurname + '\'' +
+                ", DateOfStart=" + DateOfStart +
+                ", Birthdate=" + Birthdate +
+                '}';
+    }
 }
