@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
 import java.time.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Table {
 
@@ -8,13 +10,54 @@ public class Table {
     private boolean isTaken = false;
     private LocalDate reservationDate;
     private boolean isReserved = false;
+    private HashMap<String, Integer> OrderList = new HashMap<String, Integer>();
 
-    public boolean addOrder(/*...*/){
-        return false;
+
+    public Table(int ID) {
+        this.ID = ID;
     }
 
-    public boolean generateReceipt(){
-        return false;
+    public boolean addOrder(String OrderName, int Quantity, ArrayList<Order> SpecificMenu){
+        if (Quantity <= 0)
+            return false;
+
+        if (!this.isTaken)
+            this.setTaken(true);
+
+        for (Order order: SpecificMenu)
+            if (order.getName() == OrderName){
+                if (OrderList.containsKey(OrderName))
+                    OrderList.replace(OrderName, OrderList.get(OrderName) + Quantity);
+                else
+                    OrderList.put(OrderName, Quantity);
+            }
+
+        return true;
+    }
+
+    public String generateReceipt(ArrayList<Order> SpecificMenu) {
+
+        String receipt = "";
+        double total = 0.0;
+
+        for (Map.Entry<String, Integer> orderMap: OrderList.entrySet()) {
+            for (Order order : SpecificMenu) {
+                if (orderMap.getKey() == order.getName()){
+                    receipt += (orderMap.getKey() + " x " + orderMap.getValue() + " : $" +
+                            (order.getPrice() * orderMap.getValue()) + System.lineSeparator());
+                    total += orderMap.getValue() * order.getPrice();
+                }
+            }
+        }
+
+        receipt += "Total: $" + total;
+
+        this.setTaken(false);
+        this.setReserved(false);
+
+        OrderList.clear();
+
+        return receipt;
     }
 
     public int getID() {
@@ -39,6 +82,10 @@ public class Table {
 
     public void setReserved(boolean reserved) {
         isReserved = reserved;
+    }
+
+    public LocalDate getReservationDate() {
+        return reservationDate;
     }
 
     public boolean reserveTable(LocalDate reserveDate /*, ...*/){
