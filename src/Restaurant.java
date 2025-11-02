@@ -32,6 +32,16 @@ public class Restaurant {
         return true;
     }
 
+    public boolean addTable(int ID){
+        for (Table table: TableList)
+            if (table.getID() == ID)
+                return false;
+
+        TableList.add(new Table(ID));
+
+        return true;
+    }
+
     public void printEmployeeList(){
         for (Employee emp: EmployeeList)
             System.out.println(emp);
@@ -40,6 +50,13 @@ public class Restaurant {
     public void printTables(){
         for (Table tab: TableList)
             System.out.println(tab);
+    }
+
+    public Table getTable(int ID){
+        for (Table table: TableList)
+            if (table.getID() == ID)
+                return table;
+        return null;
     }
 
     public void removeAllReservations(){
@@ -55,6 +72,26 @@ public class Restaurant {
                 return true;
             }
         return false;
+    }
+
+    public boolean addFoodAtTable(int ID, String Food, int Quantity, ArrayList<Order> SpecificMenu){
+        for (Table table: TableList)
+            if (table.getID() == ID) {
+                table.addOrder(Food, Quantity, SpecificMenu);
+                return true;
+            }
+        return false;
+    }
+
+    public boolean setupTables(){
+        for (Table tab: TableList){
+            if (tab.isReserved() && LocalDate.now().equals(tab.getReservationDate())){
+                tab.setTaken(true);
+            } else{
+                tab.setTaken(false);
+            }
+        }
+        return true;
     }
 
 }
