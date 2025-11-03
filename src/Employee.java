@@ -1,5 +1,7 @@
 
 import java.time.*;
+
+//Super Class; used as inheritance
 public class Employee {
     protected String NID;
     protected String NameSurname;

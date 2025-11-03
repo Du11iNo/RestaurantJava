@@ -1,5 +1,6 @@
 
 
+//Also known as Food
 public class Order {
     private final String Name;
     private final double Price;

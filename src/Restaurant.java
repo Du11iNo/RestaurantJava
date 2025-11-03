@@ -1,12 +1,16 @@
 
 import java.util.ArrayList;
 import java.time.*;
+
+//Contains all main functions
 public class Restaurant {
 
-    private ArrayList<Employee> EmployeeList = new ArrayList<>();
-    private ArrayList<Table> TableList = new ArrayList<>();
+    private ArrayList<Employee> EmployeeList = new ArrayList<>(); //Contains all employees
+    private ArrayList<Table> TableList = new ArrayList<>(); //Contains all tables
 
     public boolean fireEmployee(String nid){
+
+        //Find employee in list & remove it
         for (Employee employee: EmployeeList){
             if (employee.getNID() == nid){
                 EmployeeList.remove(employee);
@@ -17,6 +21,8 @@ public class Restaurant {
     }
 
     public boolean addWaiter(String NID, String NameSurname, LocalDate Birthdate){
+
+        //Dont allow birthdates after present time; Same for other roles
         if (Birthdate.isAfter(LocalDate.now()))
             return false;
 
@@ -33,6 +39,8 @@ public class Restaurant {
     }
 
     public boolean addTable(int ID){
+
+        //If table with ID exists, do not add to list
         for (Table table: TableList)
             if (table.getID() == ID)
                 return false;
@@ -53,6 +61,8 @@ public class Restaurant {
     }
 
     public Table getTable(int ID){
+
+        //Check list for table with specified ID
         for (Table table: TableList)
             if (table.getID() == ID)
                 return table;
@@ -65,6 +75,8 @@ public class Restaurant {
     }
 
     public boolean setReservation(int ID, LocalDate date){
+
+        //Find table with specified ID; Reserve for specified date
         for (Table tab: TableList)
             if (tab.getID() == ID){
                 tab.setReserved(true);
@@ -75,6 +87,8 @@ public class Restaurant {
     }
 
     public boolean addFoodAtTable(int ID, String Food, int Quantity, ArrayList<Order> SpecificMenu){
+
+        //Add food in Table's Order list
         for (Table table: TableList)
             if (table.getID() == ID) {
                 table.addOrder(Food, Quantity, SpecificMenu);
@@ -83,6 +97,7 @@ public class Restaurant {
         return false;
     }
 
+    //Set isTaken for all tables to false unless it has reservation for today
     public boolean setupTables(){
         for (Table tab: TableList){
             if (tab.isReserved() && LocalDate.now().equals(tab.getReservationDate())){
