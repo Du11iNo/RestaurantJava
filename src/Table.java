@@ -4,13 +4,14 @@ import java.time.*;
 import java.util.HashMap;
 import java.util.Map;
 
+//Contains data related to specific table in Restaurant
 public class Table {
 
     private int ID;
     private boolean isTaken = false;
     private LocalDate reservationDate;
     private boolean isReserved = false;
-    private HashMap<String, Integer> OrderList = new HashMap<String, Integer>();
+    private HashMap<String, Integer> OrderMap = new HashMap<String, Integer>(); //Contains Food and repeated times
 
 
     public Table(int ID) {
@@ -18,18 +19,33 @@ public class Table {
     }
 
     public boolean addOrder(String OrderName, int Quantity, ArrayList<Order> SpecificMenu){
+
+        //Don't allow quantities below or equal to 0
         if (Quantity <= 0)
             return false;
 
+        //Set to taken (Adding orders to a table means the table has been taken and orders have been made)
         if (!this.isTaken)
             this.setTaken(true);
 
-        for (Order order: SpecificMenu)
-            if (order.getName() == OrderName){
-                if (OrderList.containsKey(OrderName))
-                    OrderList.replace(OrderName, OrderList.get(OrderName) + Quantity);
+        //Here we go now :(
+        for (Order order: SpecificMenu) //For every Food in the Menu specified above
+            if (order.getName() == OrderName){ //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
+                if (OrderMap.containsKey(OrderName))
+                    //Check if entry is already registered to OrderMap
+                    //then add the quantity
+                    OrderMap.replace(OrderName, OrderMap.get(OrderName) + Quantity);
+
+                    /*
+                        Example:
+                            Person A in Table 1 ordered 3 Chicken plates
+                            Previously, he had ordered 1 Chicken plate
+                            In OrderMap -> {Chicken = 1 + 3}
+                    */
+
                 else
-                    OrderList.put(OrderName, Quantity);
+                    //Simply add entry
+                    OrderMap.put(OrderName, Quantity);
             }
 
         return true;
@@ -37,25 +53,37 @@ public class Table {
 
     public String generateReceipt(ArrayList<Order> SpecificMenu) {
 
-        String receipt = "";
+        //Will contain the whole receipt ( Sort of toString() ))
+        String receipt = "Date: " + LocalDate.now().toString() + System.lineSeparator();
+
         double total = 0.0;
 
-        for (Map.Entry<String, Integer> orderMap: OrderList.entrySet()) {
-            for (Order order : SpecificMenu) {
-                if (orderMap.getKey() == order.getName()){
+        //Here we go again ;(
+        for (Map.Entry<String, Integer> orderMap: OrderMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
+            for (Order order : SpecificMenu) { //For every Food in the Menu specified above
+                if (orderMap.getKey() == order.getName()){ //If entry key is found on Menu
+
                     receipt += (orderMap.getKey() + " x " + orderMap.getValue() + " : $" +
                             (order.getPrice() * orderMap.getValue()) + System.lineSeparator());
-                    total += orderMap.getValue() * order.getPrice();
+                    total += orderMap.getValue() * order.getPrice(); //Add gathered costs to total
+
+                    /*
+                        Out:
+                            Key1 x Value1 : $ (Price1 * Value1) \n
+                            Key2 x Value2 : $ (Price2 * Value2) \n
+                            .....
+                    */
+
                 }
             }
         }
 
-        receipt += "Total: $" + total;
+        receipt += "Total: $" + total; //Add the total to receipt
 
+        //Reset Table
         this.setTaken(false);
         this.setReserved(false);
-
-        OrderList.clear();
+        OrderMap.clear();
 
         return receipt;
     }
@@ -89,6 +117,8 @@ public class Table {
     }
 
     public boolean reserveTable(LocalDate reserveDate /*, ...*/){
+
+        //Don't allow dates before present date
         if (LocalDate.now().isAfter(reserveDate))
             return false;
 
