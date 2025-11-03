@@ -4,7 +4,7 @@ import java.util.ArrayList;
 //Contains all orders/food in an Array
 public class Menu {
 
-    private ArrayList<Order> MenuList = new ArrayList<>(); //Food List
+    private ArrayList<Order> MenuList = new ArrayList<>(); //Food List; "Order" class -> WIP
 
     public void printMenu(){
         for (Order order: MenuList)

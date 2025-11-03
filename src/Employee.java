@@ -3,11 +3,27 @@ import java.time.*;
 
 //Super Class; used as inheritance
 public class Employee {
-    protected String NID;
-    protected String NameSurname;
-    protected LocalDate DateOfStart;
-    protected LocalDate Birthdate;
-    protected double Paycheck = 0.0;
+    private String NID;
+    private String NameSurname;
+    private Roles role;
+    private LocalDate DateOfStart;
+    private LocalDate Birthdate;
+    private double Paycheck = 0.0;
+
+    public enum Roles {
+        Chef,
+        Waiter,
+        Cleaner /* More to be added (maybe) */
+    }
+
+    public Employee(String NID, String nameSurname, Roles role, LocalDate birthdate, double paycheck) {
+        this.NID = NID;
+        NameSurname = nameSurname;
+        this.role = role;
+        DateOfStart = LocalDate.now();
+        Birthdate = birthdate;
+        Paycheck = paycheck;
+    }
 
     public String getNID() {
         return NID;
@@ -23,6 +39,14 @@ public class Employee {
 
     public void setNameSurname(String nameSurname) {
         NameSurname = nameSurname;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 
     public LocalDate getDateOfStart() {
@@ -42,6 +66,7 @@ public class Employee {
         return "Employee{" +
                 "NID='" + NID + '\'' +
                 ", NameSurname='" + NameSurname + '\'' +
+                ", role=" + role +
                 ", DateOfStart=" + DateOfStart +
                 ", Birthdate=" + Birthdate +
                 '}';

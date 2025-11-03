@@ -20,21 +20,13 @@ public class Restaurant {
         return false;
     }
 
-    public boolean addWaiter(String NID, String NameSurname, LocalDate Birthdate){
+    public boolean addEmployee(String NID, String Name_username, Employee.Roles role, LocalDate Birthdate, double Paycheck){
 
-        //Dont allow birthdates after present time; Same for other roles
-        if (Birthdate.isAfter(LocalDate.now()))
+        //Don't allow birthdates after present time
+        if (LocalDate.now().isBefore(Birthdate))
             return false;
 
-        EmployeeList.add(new Waiter(NID, NameSurname, Birthdate));
-        return true;
-    }
-
-    public boolean addChef(String NID, String NameSurname, LocalDate Birthdate){
-        if (Birthdate.isAfter(LocalDate.now()))
-            return false;
-
-        EmployeeList.add(new Chef(NID, NameSurname, Birthdate));
+        EmployeeList.add(new Employee(NID, Name_username, role, Birthdate, Paycheck));
         return true;
     }
 
