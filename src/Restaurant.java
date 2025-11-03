@@ -20,7 +20,7 @@ public class Restaurant {
         return false;
     }
 
-    public boolean addEmployee(String NID, String Name_username, Employee.Roles role, LocalDate Birthdate, double Paycheck){
+    public boolean addEmployee(String NID, String Name_surname, Employee.Roles role, LocalDate Birthdate, double Paycheck){
 
         //Don't allow birthdates after present time
         if (LocalDate.now().isBefore(Birthdate))
