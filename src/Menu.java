@@ -25,10 +25,10 @@ public class Menu {
 
             //Check if Food is existing
             for (Product product : MenuList)
-                if (product.getName().equals(Name))
+                if (product.getName().equals(Name.toLowerCase()))
                     return false;
 
-            MenuList.add(new Product(Name, Price));
+            MenuList.add(new Product(Name.toLowerCase(), Price));
             return true;
         }
         catch (IllegalArgumentException e) {
@@ -48,7 +48,7 @@ public class Menu {
         try {
         //Find Food in Array & remove it
         for (Product product : MenuList)
-            if (product.getName().equals(Name)) {
+            if (product.getName().equals(Name.toLowerCase())) {
                 MenuList.remove(product);
                 return true;
             }
