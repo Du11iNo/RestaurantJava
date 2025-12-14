@@ -5,30 +5,30 @@ import java.util.Arrays;
 //Contains all orders/food in an Array
 public class Menu {
 
-    private static ArrayList<Product> MenuList = new ArrayList<>(); //Food List
+    private static ArrayList<Product> menuList = new ArrayList<>(); //Food List
 
     public static void printMenu() {
-        for (Product product : MenuList)
+        for (Product product : menuList)
             System.out.println(product);
     }
 
     public static ArrayList<Product> getMenu() {
-        return MenuList;
+        return menuList;
     }
 
-    public static boolean addFoodToMenu(String Name, double Price) {
+    public static boolean addFoodToMenu(String name, double price) {
 
         try {
             //Don't allow prices lower than 0
-            if (Price < 0)
+            if (price < 0)
                 return false;
 
             //Check if Food is existing
-            for (Product product : MenuList)
-                if (product.getName().equals(Name.toLowerCase()))
+            for (Product product : menuList)
+                if (product.getName().equals(name.toLowerCase()))
                     return false;
 
-            MenuList.add(new Product(Name.toLowerCase(), Price));
+            menuList.add(new Product(name.toLowerCase(), price));
             return true;
         }
         catch (IllegalArgumentException e) {
@@ -43,13 +43,13 @@ public class Menu {
         }
     }
 
-    public static boolean removeFoodFromMenu(String Name) {
+    public static boolean removeFoodFromMenu(String name) {
 
         try {
         //Find Food in Array & remove it
-        for (Product product : MenuList)
-            if (product.getName().equals(Name.toLowerCase())) {
-                MenuList.remove(product);
+        for (Product product : menuList)
+            if (product.getName().equals(name.toLowerCase())) {
+                menuList.remove(product);
                 return true;
             }
         return false;
