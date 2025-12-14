@@ -5,18 +5,18 @@ import java.util.Arrays;
 //Contains all orders/food in an Array
 public class Menu {
 
-    private ArrayList<Product> MenuList = new ArrayList<>(); //Food List
+    private static ArrayList<Product> MenuList = new ArrayList<>(); //Food List
 
-    public void printMenu() {
+    public static void printMenu() {
         for (Product product : MenuList)
             System.out.println(product);
     }
 
-    public ArrayList<Product> getMenu() {
+    public static ArrayList<Product> getMenu() {
         return MenuList;
     }
 
-    public boolean addFoodToMenu(String Name, double Price) {
+    public static boolean addFoodToMenu(String Name, double Price) {
 
         try {
             //Don't allow prices lower than 0
@@ -43,7 +43,7 @@ public class Menu {
         }
     }
 
-    public boolean removeFoodFromMenu(String Name) {
+    public static boolean removeFoodFromMenu(String Name) {
 
         try {
         //Find Food in Array & remove it
