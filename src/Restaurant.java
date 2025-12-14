@@ -125,7 +125,7 @@ public class Restaurant {
         //Add food in Table's Order list
         for (Table table: tableList)
             if (table.getID() == ID) {
-                table.addOrder(Food, Quantity);
+                table.addOrder(Food.toLowerCase(), Quantity);
                 return true;
             }
         return false;
@@ -144,14 +144,9 @@ public class Restaurant {
 
     //Set isTaken for all tables to false unless it has reservation for today
     public boolean setupTables(){
-        for (Table tab: tableList){
-            if (tab.isReserved() && LocalDate.now().equals(tab.getReservationDate())){
-                tab.setTaken(true);
-            } else{
-                tab.setTaken(false);
-            }
+        for (Table tab: tableList) {
+            tab.setTaken(tab.isReserved() && LocalDate.now().equals(tab.getReservationDate()));
         }
         return true;
     }
-
 }
