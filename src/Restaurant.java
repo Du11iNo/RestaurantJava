@@ -6,15 +6,15 @@ import java.util.Arrays;
 //Contains all main functions
 public class Restaurant {
 
-    private ArrayList<Employee> EmployeeList = new ArrayList<>(); //Contains all employees
-    private ArrayList<Table> TableList = new ArrayList<>(); //Contains all tables
+    private ArrayList<Employee> employeeList = new ArrayList<>(); //Contains all employees
+    private ArrayList<Table> tableList = new ArrayList<>(); //Contains all tables
 
     public boolean fireEmployee(String nid){
 
         //Find employee in list & remove it
-        for (Employee employee: EmployeeList){
+        for (Employee employee: employeeList){
             if (employee.getNID().equals(nid)) {
-                EmployeeList.remove(employee);
+                employeeList.remove(employee);
                 return true;
             }
         }
@@ -27,7 +27,7 @@ public class Restaurant {
         if (Birthdate.isAfter(LocalDate.now()))
             return false;
 
-        EmployeeList.add(new Waiter(NID, NameSurname, Birthdate));
+        employeeList.add(new Waiter(NID, NameSurname, Birthdate));
         return true;
     }
 
@@ -35,7 +35,7 @@ public class Restaurant {
         if (Birthdate.isAfter(LocalDate.now()))
             return false;
 
-        EmployeeList.add(new Chef(NID, NameSurname, Birthdate));
+        employeeList.add(new Chef(NID, NameSurname, Birthdate));
         return true;
     }
 
@@ -43,11 +43,11 @@ public class Restaurant {
 
         try {
             //If table with ID exists, do not add to list
-            for (Table table : TableList)
+            for (Table table : tableList)
                 if (table.getID() == ID)
                     return false;
 
-            TableList.add(new Table(ID));
+            tableList.add(new Table(ID));
             return true;
         }
 
@@ -62,12 +62,12 @@ public class Restaurant {
     }
 
     public void printEmployeeList(){
-        for (Employee emp: EmployeeList)
+        for (Employee emp: employeeList)
             System.out.println(emp);
     }
 
     public void printTables(){
-        for (Table tab: TableList)
+        for (Table tab: tableList)
             System.out.println(tab);
     }
 
@@ -75,7 +75,7 @@ public class Restaurant {
 
         try {
             //Check list for table with specified ID
-            for (Table table : TableList)
+            for (Table table : tableList)
                 if (table.getID() == ID)
                     return table;
             return null;
@@ -91,7 +91,7 @@ public class Restaurant {
     }
 
     public void removeAllReservations(){
-        for (Table tab: TableList)
+        for (Table tab: tableList)
             tab.setReserved(false);
     }
 
@@ -99,7 +99,7 @@ public class Restaurant {
 
         try {
         //Find table with specified ID; Reserve for specified date
-        for (Table tab: TableList)
+        for (Table tab: tableList)
             if (tab.getID() == ID){
                 tab.setReserved(true);
                 tab.reserveTable(date);
@@ -119,13 +119,13 @@ public class Restaurant {
         }
     }
 
-    public boolean addFoodAtTable(int ID, String Food, int Quantity, ArrayList<Product> SpecificMenu){
+    public boolean addFoodAtTable(int ID, String Food, int Quantity){
 
         try{
         //Add food in Table's Order list
-        for (Table table: TableList)
+        for (Table table: tableList)
             if (table.getID() == ID) {
-                table.addOrder(Food, Quantity, SpecificMenu);
+                table.addOrder(Food, Quantity);
                 return true;
             }
         return false;
@@ -144,7 +144,7 @@ public class Restaurant {
 
     //Set isTaken for all tables to false unless it has reservation for today
     public boolean setupTables(){
-        for (Table tab: TableList){
+        for (Table tab: tableList){
             if (tab.isReserved() && LocalDate.now().equals(tab.getReservationDate())){
                 tab.setTaken(true);
             } else{
