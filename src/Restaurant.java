@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.time.*;
+import java.util.Arrays;
 
 //Contains all main functions
 public class Restaurant {
@@ -12,7 +13,7 @@ public class Restaurant {
 
         //Find employee in list & remove it
         for (Employee employee: EmployeeList){
-            if (employee.getNID() == nid){
+            if (employee.getNID().equals(nid)) {
                 EmployeeList.remove(employee);
                 return true;
             }
@@ -40,14 +41,24 @@ public class Restaurant {
 
     public boolean addTable(int ID){
 
-        //If table with ID exists, do not add to list
-        for (Table table: TableList)
-            if (table.getID() == ID)
-                return false;
+        try {
+            //If table with ID exists, do not add to list
+            for (Table table : TableList)
+                if (table.getID() == ID)
+                    return false;
 
-        TableList.add(new Table(ID));
+            TableList.add(new Table(ID));
+            return true;
+        }
 
-        return true;
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage() + System.lineSeparator() + Arrays.toString(e.getStackTrace()));
+            return false;
+        }
+        catch (Exception e) {
+            System.out.println("Error in Add to TableList: " + e.getMessage());
+            return false;
+        }
     }
 
     public void printEmployeeList(){
@@ -62,11 +73,21 @@ public class Restaurant {
 
     public Table getTable(int ID){
 
-        //Check list for table with specified ID
-        for (Table table: TableList)
-            if (table.getID() == ID)
-                return table;
-        return null;
+        try {
+            //Check list for table with specified ID
+            for (Table table : TableList)
+                if (table.getID() == ID)
+                    return table;
+            return null;
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        catch (Exception e) {
+            System.out.println("Error in getTable function in Table" + System.lineSeparator() + Arrays.toString(e.getStackTrace()));
+            return null;
+        }
     }
 
     public void removeAllReservations(){
@@ -76,6 +97,7 @@ public class Restaurant {
 
     public boolean setReservation(int ID, LocalDate date){
 
+        try {
         //Find table with specified ID; Reserve for specified date
         for (Table tab: TableList)
             if (tab.getID() == ID){
@@ -84,10 +106,22 @@ public class Restaurant {
                 return true;
             }
         return false;
+        }
+        catch (DateTimeException | IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        catch (Exception e) {
+            System.out.println("Error in setReservation function in Restaurant class"
+                    + System.lineSeparator()
+                    + Arrays.toString(e.getStackTrace()));
+            return false;
+        }
     }
 
     public boolean addFoodAtTable(int ID, String Food, int Quantity, ArrayList<Product> SpecificMenu){
 
+        try{
         //Add food in Table's Order list
         for (Table table: TableList)
             if (table.getID() == ID) {
@@ -95,6 +129,17 @@ public class Restaurant {
                 return true;
             }
         return false;
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        catch (Exception e) {
+            System.out.println("Error in addFoodToTable function in Restaurant class"
+                    + System.lineSeparator()
+                    + Arrays.toString(e.getStackTrace()));
+            return false;
+        }
     }
 
     //Set isTaken for all tables to false unless it has reservation for today

@@ -11,14 +11,15 @@ public class Table {
     private boolean isTaken = false;
     private LocalDate reservationDate;
     private boolean isReserved = false;
-    private HashMap<String, Integer> OrderMap = new HashMap<String, Integer>(); //Contains Food and repeated times
-
 
     public Table(int ID) {
         this.ID = ID;
     }
 
     public boolean addOrder(String OrderName, int Quantity, ArrayList<Product> SpecificMenu){
+
+        HashMap<String, Integer> ProductMap = new HashMap<String, Integer>();
+        //Contains Food and repeated times
 
         //Don't allow quantities below or equal to 0
         if (Quantity <= 0)
@@ -30,11 +31,11 @@ public class Table {
 
         //Here we go now :(
         for (Product product : SpecificMenu) //For every Food in the Menu specified above
-            if (product.getName() == OrderName){ //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
-                if (OrderMap.containsKey(OrderName))
+            if (product.getName().equals(OrderName)) { //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
+                if (ProductMap.containsKey(OrderName))
                     //Check if entry is already registered to OrderMap
                     //then add the quantity
-                    OrderMap.replace(OrderName, OrderMap.get(OrderName) + Quantity);
+                    ProductMap.replace(OrderName, ProductMap.get(OrderName) + Quantity);
 
                     /*
                         Example:
@@ -45,7 +46,7 @@ public class Table {
 
                 else
                     //Simply add entry
-                    OrderMap.put(OrderName, Quantity);
+                    ProductMap.put(OrderName, Quantity);
             }
 
         return true;
@@ -59,7 +60,7 @@ public class Table {
         double total = 0.0;
 
         //Here we go again ;(
-        for (Map.Entry<String, Integer> orderMap: OrderMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
+        for (Map.Entry<String, Integer> orderMap: ProductMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
             for (Product product : SpecificMenu) { //For every Food in the Menu specified above
                 if (orderMap.getKey() == product.getName()){ //If entry key is found on Menu
 
