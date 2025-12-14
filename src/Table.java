@@ -35,11 +35,11 @@ public class Table {
 
             //Here we go now :(
             for (Product product : menu) //For every Food in the Menu specified above
-                if (product.getName().equals(orderName.toLowerCase())) { //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
-                    if (productMap.containsKey(orderName.toLowerCase()))
+                if (product.getName().equals(orderName)) { //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
+                    if (productMap.containsKey(orderName))
                         //Check if entry is already registered to OrderMap
                         //then add the quantity
-                        productMap.replace(orderName.toLowerCase(), productMap.get(orderName) + quantity);
+                        productMap.replace(orderName, productMap.get(orderName) + quantity);
 
                     /*
                         Example:
@@ -50,7 +50,7 @@ public class Table {
 
                     else
                         //Simply add entry
-                        productMap.put(orderName.toLowerCase(), quantity);
+                        productMap.put(orderName, quantity);
                 }
 
             return true;
@@ -80,7 +80,7 @@ public class Table {
             //Here we go again ;(
             for (Map.Entry<String, Integer> productEntrySet : productMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
                 for (Product product : menu) { //For every Food in the Menu specified above
-                    if (productEntrySet.getKey().equals(product.getName().toLowerCase())) { //If entry key is found on Menu
+                    if (productEntrySet.getKey().equals(product.getName())) { //If entry key is found on Menu
 
                         String productName = productEntrySet.getKey();
                         String capitalisedProductName = productName.substring(0, 1).toUpperCase()
