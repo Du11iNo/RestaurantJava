@@ -1,7 +1,7 @@
 
 
 //Also known as Food
-public class Order {
+public class Product {
     private final String Name;
     private final double Price;
 
@@ -13,7 +13,7 @@ public class Order {
         return Price;
     }
 
-    public Order(String name, double price) {
+    public Product(String name, double price) {
         Name = name;
         Price = price;
     }

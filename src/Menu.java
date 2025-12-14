@@ -4,14 +4,14 @@ import java.util.ArrayList;
 //Contains all orders/food in an Array
 public class Menu {
 
-    private ArrayList<Order> MenuList = new ArrayList<>(); //Food List
+    private ArrayList<Product> MenuList = new ArrayList<>(); //Food List
 
     public void printMenu(){
-        for (Order order: MenuList)
-            System.out.println(order);
+        for (Product product : MenuList)
+            System.out.println(product);
     }
 
-    public ArrayList<Order> getMenu(){
+    public ArrayList<Product> getMenu(){
         return MenuList;
     }
 
@@ -22,20 +22,20 @@ public class Menu {
             return false;
 
         //Check if Food is existing
-        for (Order order: MenuList)
-            if (order.getName() == Name)
+        for (Product product : MenuList)
+            if (product.getName() == Name)
                 return false;
 
-        MenuList.add(new Order(Name, Price));
+        MenuList.add(new Product(Name, Price));
         return true;
     }
 
     public boolean removeFoodFromMenu(String Name){
 
         //Find Food in Array & remove it
-        for (Order order: MenuList)
-            if (order.getName() == Name) {
-                MenuList.remove(order);
+        for (Product product : MenuList)
+            if (product.getName() == Name) {
+                MenuList.remove(product);
                 return true;
             }
         return false;

@@ -86,7 +86,7 @@ public class Restaurant {
         return false;
     }
 
-    public boolean addFoodAtTable(int ID, String Food, int Quantity, ArrayList<Order> SpecificMenu){
+    public boolean addFoodAtTable(int ID, String Food, int Quantity, ArrayList<Product> SpecificMenu){
 
         //Add food in Table's Order list
         for (Table table: TableList)

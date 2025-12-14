@@ -18,7 +18,7 @@ public class Table {
         this.ID = ID;
     }
 
-    public boolean addOrder(String OrderName, int Quantity, ArrayList<Order> SpecificMenu){
+    public boolean addOrder(String OrderName, int Quantity, ArrayList<Product> SpecificMenu){
 
         //Don't allow quantities below or equal to 0
         if (Quantity <= 0)
@@ -29,8 +29,8 @@ public class Table {
             this.setTaken(true);
 
         //Here we go now :(
-        for (Order order: SpecificMenu) //For every Food in the Menu specified above
-            if (order.getName() == OrderName){ //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
+        for (Product product : SpecificMenu) //For every Food in the Menu specified above
+            if (product.getName() == OrderName){ //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
                 if (OrderMap.containsKey(OrderName))
                     //Check if entry is already registered to OrderMap
                     //then add the quantity
@@ -51,7 +51,7 @@ public class Table {
         return true;
     }
 
-    public String generateReceipt(ArrayList<Order> SpecificMenu) {
+    public String generateReceipt(ArrayList<Product> SpecificMenu) {
 
         //Will contain the whole receipt ( Sort of toString() ))
         String receipt = "Date: " + LocalDate.now().toString() + System.lineSeparator();
@@ -60,12 +60,12 @@ public class Table {
 
         //Here we go again ;(
         for (Map.Entry<String, Integer> orderMap: OrderMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
-            for (Order order : SpecificMenu) { //For every Food in the Menu specified above
-                if (orderMap.getKey() == order.getName()){ //If entry key is found on Menu
+            for (Product product : SpecificMenu) { //For every Food in the Menu specified above
+                if (orderMap.getKey() == product.getName()){ //If entry key is found on Menu
 
                     receipt += (orderMap.getKey() + " x " + orderMap.getValue() + " : $" +
-                            (order.getPrice() * orderMap.getValue()) + System.lineSeparator());
-                    total += orderMap.getValue() * order.getPrice(); //Add gathered costs to total
+                            (product.getPrice() * orderMap.getValue()) + System.lineSeparator());
+                    total += orderMap.getValue() * product.getPrice(); //Add gathered costs to total
 
                     /*
                         Out:
