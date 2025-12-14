@@ -13,12 +13,12 @@ public class FileHandler {
 
             return Files.readAllLines(Path.of(filename)).toArray(new String[0]);
         }
-        catch (IOException e) {
-            System.out.println(e.getMessage());
+        catch (NullPointerException | IOException e) {
+            System.err.println(e.getMessage());
             return null;
         }
         catch (Exception e) {
-            System.out.println("Error in readFile function of FileHandler class"
+            System.err.println("Error in readFile function of FileHandler class"
                     + System.lineSeparator()
                     + Arrays.toString(e.getStackTrace()));
             return null;

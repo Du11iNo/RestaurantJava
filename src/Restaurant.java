@@ -21,13 +21,13 @@ public class Restaurant {
         return false;
     }
 
-    public boolean addWaiter(String NID, String NameSurname, LocalDate Birthdate){
+    public boolean addWaiter(String NID, String nameSurname, LocalDate birthdate){
 
         //Dont allow birthdates after present time; Same for other roles
-        if (Birthdate.isAfter(LocalDate.now()))
+        if (birthdate.isAfter(LocalDate.now()))
             return false;
 
-        employeeList.add(new Waiter(NID, NameSurname, Birthdate));
+        employeeList.add(new Waiter(NID, nameSurname, birthdate));
         return true;
     }
 
@@ -52,11 +52,11 @@ public class Restaurant {
         }
 
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage() + System.lineSeparator() + Arrays.toString(e.getStackTrace()));
+            System.err.println(e.getMessage() + System.lineSeparator() + Arrays.toString(e.getStackTrace()));
             return false;
         }
         catch (Exception e) {
-            System.out.println("Error in Add to TableList: " + e.getMessage());
+            System.err.println("Error in Add to TableList: " + e.getMessage());
             return false;
         }
     }
@@ -81,11 +81,11 @@ public class Restaurant {
             return null;
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return null;
         }
         catch (Exception e) {
-            System.out.println("Error in getTable function in Table" + System.lineSeparator() + Arrays.toString(e.getStackTrace()));
+            System.err.println("Error in getTable function in Table" + System.lineSeparator() + Arrays.toString(e.getStackTrace()));
             return null;
         }
     }
@@ -108,11 +108,11 @@ public class Restaurant {
         return false;
         }
         catch (DateTimeException | IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return false;
         }
         catch (Exception e) {
-            System.out.println("Error in setReservation function in Restaurant class"
+            System.err.println("Error in setReservation function in Restaurant class"
                     + System.lineSeparator()
                     + Arrays.toString(e.getStackTrace()));
             return false;
@@ -131,11 +131,11 @@ public class Restaurant {
         return false;
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return false;
         }
         catch (Exception e) {
-            System.out.println("Error in addFoodToTable function in Restaurant class"
+            System.err.println("Error in addFoodToTable function in Restaurant class"
                     + System.lineSeparator()
                     + Arrays.toString(e.getStackTrace()));
             return false;

@@ -56,11 +56,11 @@ public class Table {
             return true;
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return false;
         }
         catch (Exception e) {
-            System.out.println("Error in addOrder function in Table class"
+            System.err.println("Error in addOrder function in Table class"
                     + System.lineSeparator()
                     + Arrays.toString(e.getStackTrace()));
             return false;
@@ -114,11 +114,11 @@ public class Table {
             return receipt;
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return null;
         }
         catch (Exception e) {
-            System.out.println("Error in generateReceipt function in Table class"
+            System.err.println("Error in generateReceipt function in Table class"
                     + System.lineSeparator()
                     + Arrays.toString(e.getStackTrace()));
             return null;
@@ -166,11 +166,11 @@ public class Table {
             return true;
         }
         catch (DateTimeException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return false;
         }
         catch (Exception e) {
-            System.out.println("Error in reserveTable function of Table class"
+            System.err.println("Error in reserveTable function of Table class"
                     + System.lineSeparator()
                     + Arrays.toString(e.getStackTrace()));
             return false;

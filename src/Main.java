@@ -10,7 +10,7 @@ public class Main {
 
         Menu.addFoodToMenu("Chicken", 17.0);
 
-        Menu.addFoodToMenu("FantaCan", 5.0);
+        Menu.addFoodToMenu("FantaCan", -5.0);
 
         Restaurant SummerDine = new Restaurant();
 

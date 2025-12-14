@@ -21,7 +21,7 @@ public class Menu {
         try {
             //Don't allow prices lower than 0
             if (price < 0)
-                return false;
+                throw new IllegalArgumentException("Price is lower than 0 ");
 
             //Check if Food is existing
             for (Product product : menuList)
@@ -32,11 +32,16 @@ public class Menu {
             return true;
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            StackTraceElement el = e.getStackTrace()[1];
+            System.err.printf("Error in %s.%s, line %d: %s \n",
+                    el.getClassName(),
+                    el.getMethodName(),
+                    el.getLineNumber(),
+                    e.getMessage());
             return false;
         }
         catch (Exception e) {
-            System.out.println("Error in addFoodToMenu function in Menu class"
+            System.err.println("Error in addFoodToMenu function in Menu class"
                     + System.lineSeparator()
                     + Arrays.toString(e.getStackTrace()));
             return false;
@@ -55,11 +60,11 @@ public class Menu {
         return false;
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return false;
         }
         catch (Exception e) {
-            System.out.println("Error in removeFoodFromMenu function in Menu class"
+            System.err.println("Error in removeFoodFromMenu function in Menu class"
                     + System.lineSeparator()
                     + Arrays.toString(e.getStackTrace()));
             return false;
