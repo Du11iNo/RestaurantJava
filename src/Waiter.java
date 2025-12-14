@@ -3,12 +3,8 @@ import java.time.*;
 
 public class Waiter extends Employee {
 
-    public Waiter(String nid, String nameSurname, LocalDate Birthday) {
-        NID = nid;
-        NameSurname = nameSurname;
-        DateOfStart = LocalDate.now();
-        Birthdate = Birthday;
+    public Waiter(String nid, String nameSurname, LocalDate birthday) {
+        super(nid, nameSurname, birthday);
         Paycheck = 500.0;
     }
-
 }
