@@ -20,7 +20,9 @@ public class Table {
         this.ID = ID;
     }
 
-    public boolean addOrder(String orderName, int quantity, ArrayList<Product> specificMenu){
+    public boolean addOrder(String orderName, int quantity){
+
+        ArrayList<Product> menu = Menu.getMenu();
 
         try {
             //Don't allow quantities below or equal to 0
@@ -32,7 +34,7 @@ public class Table {
                 this.setTaken(true);
 
             //Here we go now :(
-            for (Product product : specificMenu) //For every Food in the Menu specified above
+            for (Product product : menu) //For every Food in the Menu specified above
                 if (product.getName().equals(orderName.toLowerCase())) { //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
                     if (productMap.containsKey(orderName.toLowerCase()))
                         //Check if entry is already registered to OrderMap
@@ -65,28 +67,31 @@ public class Table {
         }
     }
 
-    public StringBuilder generateReceipt(ArrayList<Product> SpecificMenu) {
+    public StringBuilder generateReceipt() {
 
-        //Will contain the whole receipt ( Sort of toString() ))
-        StringBuilder receipt = new StringBuilder("Date: " + LocalDate.now().toString() + System.lineSeparator());
+        try {
+            ArrayList<Product> menu = Menu.getMenu();
 
-        double total = 0.0;
+            //Will contain the whole receipt ( Sort of toString() ))
+            StringBuilder receipt = new StringBuilder("Date: " + LocalDate.now().toString() + System.lineSeparator());
 
-        //Here we go again ;(
-        for (Map.Entry<String, Integer> productEntrySet: productMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
-            for (Product product : SpecificMenu) { //For every Food in the Menu specified above
-                if (productEntrySet.getKey().equals(product.getName().toLowerCase())){ //If entry key is found on Menu
+            double total = 0.0;
 
-                    String productName            = productEntrySet.getKey();
-                    String capitalisedProductName = productName.substring(0,1).toUpperCase()
-                                                    + productName.substring(1);
+            //Here we go again ;(
+            for (Map.Entry<String, Integer> productEntrySet : productMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
+                for (Product product : menu) { //For every Food in the Menu specified above
+                    if (productEntrySet.getKey().equals(product.getName().toLowerCase())) { //If entry key is found on Menu
 
-                    receipt.append(productEntrySet.getKey().substring(0,1).toUpperCase()
-                                   + productEntrySet.getKey().substring(1)
-                                   + " x " + productEntrySet.getValue() + " : $"
-                                   + (product.getPrice() * productEntrySet.getValue()) + System.lineSeparator());
+                        String productName = productEntrySet.getKey();
+                        String capitalisedProductName = productName.substring(0, 1).toUpperCase()
+                                + productName.substring(1);
 
-                    total += productEntrySet.getValue() * product.getPrice(); //Add gathered costs to total
+                        receipt.append(productEntrySet.getKey().substring(0, 1).toUpperCase()
+                                + productEntrySet.getKey().substring(1)
+                                + " x " + productEntrySet.getValue() + " : $"
+                                + (product.getPrice() * productEntrySet.getValue()) + System.lineSeparator());
+
+                        total += productEntrySet.getValue() * product.getPrice(); //Add gathered costs to total
 
                     /*
                         Out:
@@ -95,18 +100,29 @@ public class Table {
                             .....
                     */
 
+                    }
                 }
             }
+
+            receipt.append("Total: $" + total); //Add the total to receipt
+
+            //Reset Table
+            this.setTaken(false);
+            this.setReserved(false);
+            productMap.clear();
+
+            return receipt;
         }
-
-        receipt.append("Total: $" + total); //Add the total to receipt
-
-        //Reset Table
-        this.setTaken(false);
-        this.setReserved(false);
-        productMap.clear();
-
-        return receipt;
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        catch (Exception e) {
+            System.out.println("Error in generateReceipt function in Table class"
+                    + System.lineSeparator()
+                    + Arrays.toString(e.getStackTrace()));
+            return null;
+        }
     }
 
     public int getID() {
@@ -139,14 +155,26 @@ public class Table {
 
     public boolean reserveTable(LocalDate reserveDate /*, ...*/){
 
-        //Don't allow dates before present date
-        if (LocalDate.now().isAfter(reserveDate))
+        try {
+            //Don't allow dates before present date
+            if (LocalDate.now().isAfter(reserveDate))
+                return false;
+
+            isReserved = true;
+            reservationDate = reserveDate;
+
+            return true;
+        }
+        catch (DateTimeException e) {
+            System.out.println(e.getMessage());
             return false;
-
-        isReserved = true;
-        reservationDate = reserveDate;
-
-        return true;
+        }
+        catch (Exception e) {
+            System.out.println("Error in reserveTable function of Table class"
+                    + System.lineSeparator()
+                    + Arrays.toString(e.getStackTrace()));
+            return false;
+        }
     }
 
     public boolean takeTable(){
@@ -160,5 +188,4 @@ public class Table {
                 (isReserved ? "Is Reserved for Date: " + reservationDate : "No reservations")
                 + "]";
     }
-
 }
