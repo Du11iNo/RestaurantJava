@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.time.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,30 +13,31 @@ public class Table {
     private LocalDate reservationDate;
     private boolean isReserved = false;
 
+    @SuppressWarnings("FieldMayBeFinal")
+    private HashMap<String, Integer> productMap = new HashMap<String, Integer>(); //Contains Food and repeated times
+
     public Table(int ID) {
         this.ID = ID;
     }
 
-    public boolean addOrder(String OrderName, int Quantity, ArrayList<Product> SpecificMenu){
+    public boolean addOrder(String orderName, int quantity, ArrayList<Product> specificMenu){
 
-        HashMap<String, Integer> ProductMap = new HashMap<String, Integer>();
-        //Contains Food and repeated times
+        try {
+            //Don't allow quantities below or equal to 0
+            if (quantity <= 0)
+                return false;
 
-        //Don't allow quantities below or equal to 0
-        if (Quantity <= 0)
-            return false;
+            //Set to taken (Adding orders to a table means the table has been taken and orders have been made)
+            if (!this.isTaken)
+                this.setTaken(true);
 
-        //Set to taken (Adding orders to a table means the table has been taken and orders have been made)
-        if (!this.isTaken)
-            this.setTaken(true);
-
-        //Here we go now :(
-        for (Product product : SpecificMenu) //For every Food in the Menu specified above
-            if (product.getName().equals(OrderName)) { //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
-                if (ProductMap.containsKey(OrderName))
-                    //Check if entry is already registered to OrderMap
-                    //then add the quantity
-                    ProductMap.replace(OrderName, ProductMap.get(OrderName) + Quantity);
+            //Here we go now :(
+            for (Product product : specificMenu) //For every Food in the Menu specified above
+                if (product.getName().equals(orderName.toLowerCase())) { //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
+                    if (productMap.containsKey(orderName.toLowerCase()))
+                        //Check if entry is already registered to OrderMap
+                        //then add the quantity
+                        productMap.replace(orderName.toLowerCase(), productMap.get(orderName) + quantity);
 
                     /*
                         Example:
@@ -44,29 +46,47 @@ public class Table {
                             In OrderMap -> {Chicken = 1 + 3}
                     */
 
-                else
-                    //Simply add entry
-                    ProductMap.put(OrderName, Quantity);
-            }
+                    else
+                        //Simply add entry
+                        productMap.put(orderName.toLowerCase(), quantity);
+                }
 
-        return true;
+            return true;
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        catch (Exception e) {
+            System.out.println("Error in addOrder function in Table class"
+                    + System.lineSeparator()
+                    + Arrays.toString(e.getStackTrace()));
+            return false;
+        }
     }
 
-    public String generateReceipt(ArrayList<Product> SpecificMenu) {
+    public StringBuilder generateReceipt(ArrayList<Product> SpecificMenu) {
 
         //Will contain the whole receipt ( Sort of toString() ))
-        String receipt = "Date: " + LocalDate.now().toString() + System.lineSeparator();
+        StringBuilder receipt = new StringBuilder("Date: " + LocalDate.now().toString() + System.lineSeparator());
 
         double total = 0.0;
 
         //Here we go again ;(
-        for (Map.Entry<String, Integer> orderMap: ProductMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
+        for (Map.Entry<String, Integer> productEntrySet: productMap.entrySet()) { //Create entry set (Enhanced ifs don't work on Hashmaps)
             for (Product product : SpecificMenu) { //For every Food in the Menu specified above
-                if (orderMap.getKey() == product.getName()){ //If entry key is found on Menu
+                if (productEntrySet.getKey().equals(product.getName().toLowerCase())){ //If entry key is found on Menu
 
-                    receipt += (orderMap.getKey() + " x " + orderMap.getValue() + " : $" +
-                            (product.getPrice() * orderMap.getValue()) + System.lineSeparator());
-                    total += orderMap.getValue() * product.getPrice(); //Add gathered costs to total
+                    String productName            = productEntrySet.getKey();
+                    String capitalisedProductName = productName.substring(0,1).toUpperCase()
+                                                    + productName.substring(1);
+
+                    receipt.append(productEntrySet.getKey().substring(0,1).toUpperCase()
+                                   + productEntrySet.getKey().substring(1)
+                                   + " x " + productEntrySet.getValue() + " : $"
+                                   + (product.getPrice() * productEntrySet.getValue()) + System.lineSeparator());
+
+                    total += productEntrySet.getValue() * product.getPrice(); //Add gathered costs to total
 
                     /*
                         Out:
@@ -79,12 +99,12 @@ public class Table {
             }
         }
 
-        receipt += "Total: $" + total; //Add the total to receipt
+        receipt.append("Total: $" + total); //Add the total to receipt
 
         //Reset Table
         this.setTaken(false);
         this.setReserved(false);
-        OrderMap.clear();
+        productMap.clear();
 
         return receipt;
     }
