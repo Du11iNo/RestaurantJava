@@ -20,10 +20,17 @@ public class Main {
 
         SummerDine.addFoodAtTable(1, "Lobster", 2);
         SummerDine.addFoodAtTable(1, "Chicken", 3);
+        SummerDine.addFoodAtTable(1, "Lobster", 1);
         System.out.println(Menu.getMenu());
         System.out.println(SummerDine.getTable(1).generateReceipt());
 
         System.out.println(SummerDine.getTable(1));
+
+        System.out.println("");
+
+        for (String line: FileHandler.readFile("test.txt")){
+            System.out.println(line);
+        }
 
     }
 }
