@@ -4,16 +4,16 @@ import java.time.*;
 //Super Class; used as inheritance
 public abstract class Employee {
     protected String NID;
-    protected String NameSurname;
-    protected LocalDate DateOfStart;
-    protected LocalDate Birthdate;
-    protected double Paycheck = 0.0;
+    protected String nameSurname;
+    protected LocalDate dateOfStart;
+    protected LocalDate birthdate;
+    protected double paycheck = 0.0;
 
     public Employee(String NID, String nameSurname, LocalDate birthdate) {
         this.NID = NID;
-        NameSurname = nameSurname;
-        DateOfStart = LocalDate.now();
-        Birthdate = birthdate;
+        this.nameSurname = nameSurname;
+        this.dateOfStart = LocalDate.now();
+        this.birthdate = birthdate;
     }
 
     public String getNID() {
@@ -23,32 +23,44 @@ public abstract class Employee {
     public void setNID(String NID) {this.NID = NID;}
 
     public String getNameSurname() {
-        return NameSurname;
+        return nameSurname;
     }
 
     public void setNameSurname(String nameSurname) {
-        NameSurname = nameSurname;
+        nameSurname = nameSurname;
     }
 
     public LocalDate getDateOfStart() {
-        return DateOfStart;
+        return dateOfStart;
     }
 
     public LocalDate getBirthdate() {
-        return Birthdate;
+        return birthdate;
     }
 
     public void setBirthdate(LocalDate birthdate) {
-        Birthdate = birthdate;
+        birthdate = birthdate;
+    }
+
+    public double getPaycheck() {
+        return paycheck;
+    }
+
+    public void setPaycheck(double paycheck) {
+        this.paycheck = paycheck;
+    }
+
+    public static boolean Hire(String NID, String nameSurname, LocalDate birthdate) {
+        return false;
     }
 
     @Override
     public String toString() {
         return "Employee{" +
                 "NID='" + NID + '\'' +
-                ", NameSurname='" + NameSurname + '\'' +
-                ", DateOfStart=" + DateOfStart +
-                ", Birthdate=" + Birthdate +
+                ", NameSurname='" + nameSurname + '\'' +
+                ", DateOfStart=" + dateOfStart +
+                ", Birthdate=" + birthdate +
                 '}';
     }
 }
