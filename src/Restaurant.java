@@ -9,6 +9,10 @@ public class Restaurant {
     private static ArrayList<Employee> employeeList = new ArrayList<>(); //Contains all employees
     private static ArrayList<Table> tableList = new ArrayList<>(); //Contains all tables
 
+    public static ArrayList<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
     public static boolean fireEmployee(String nid){
 
         //Find employee in list & remove it
@@ -19,82 +23,6 @@ public class Restaurant {
             }
         }
         return false;
-    }
-
-    public static boolean addWaiter(String NID, String nameSurname, LocalDate birthdate) {
-        try {
-            //Don't allow birthdates after present time; Same for other roles
-            if (birthdate.isAfter(LocalDate.now()))
-                throw new DateTimeException("Given date is after present date");
-
-            employeeList.add(new Waiter(NID, nameSurname, birthdate));
-            return true;
-        }
-        catch (DateTimeException e) {
-            StackTraceElement[] el = e.getStackTrace();
-
-            for(StackTraceElement traceEl: el){
-                System.err.printf("%s%s.%s in line %d\n",
-                        " ".repeat(5),
-                        traceEl.getClassName(),
-                        traceEl.getMethodName(),
-                        traceEl.getLineNumber());
-            }
-            System.err.println(" ".repeat(5) + "-Context: " + e.getMessage());
-
-            return false;
-        }
-    }
-    public static boolean addChef(String NID, String nameSurname, LocalDate birthdate) {
-        try {
-            //Don't allow birthdates after present time; Same for other roles
-            if (birthdate.isAfter(LocalDate.now()))
-                throw new DateTimeException("Given date is after present date");
-
-            employeeList.add(new Chef(NID, nameSurname, birthdate));
-            return true;
-
-        }
-        catch (DateTimeException e) {
-            StackTraceElement[] el = e.getStackTrace();
-
-            for(StackTraceElement traceEl: el){
-                System.err.printf("%s%s.%s in line %d\n",
-                        " ".repeat(5),
-                        traceEl.getClassName(),
-                        traceEl.getMethodName(),
-                        traceEl.getLineNumber());
-            }
-            System.err.println(" ".repeat(5) + "-Context: " + e.getMessage());
-
-            return false;
-        }
-    }
-
-    public static boolean addCleaner(String NID, String nameSurname, LocalDate birthdate) {
-        try {
-            //Don't allow birthdates after present time; Same for other roles
-            if (birthdate.isAfter(LocalDate.now()))
-                throw new DateTimeException("Given date is after present date");
-
-            employeeList.add(new Cleaner(NID, nameSurname, birthdate));
-            return true;
-
-        }
-        catch (DateTimeException e) {
-            StackTraceElement[] el = e.getStackTrace();
-
-            for(StackTraceElement traceEl: el){
-                System.err.printf("%s%s.%s in line %d\n",
-                        " ".repeat(5),
-                        traceEl.getClassName(),
-                        traceEl.getMethodName(),
-                        traceEl.getLineNumber());
-            }
-            System.err.println(" ".repeat(5) + "-Context: " + e.getMessage());
-
-            return false;
-        }
     }
 
     public static boolean addTable(int ID){
