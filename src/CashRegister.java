@@ -41,7 +41,7 @@ public class CashRegister {
     }
 
     public double calculateEarnings() {
-        balance += earnings;
-        return earnings;
+        //balance += earnings;
+        return 0.0;
     }
 }
