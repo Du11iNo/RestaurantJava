@@ -10,7 +10,6 @@ public class FileHandler {
 
         try {
             //Read all lines from file
-
             return Files.readAllLines(Path.of(filename)).toArray(new String[0]);
         }
         catch (NullPointerException | IOException e) {
@@ -18,9 +17,7 @@ public class FileHandler {
             return null;
         }
         catch (Exception e) {
-            System.err.println("Error in readFile function of FileHandler class"
-                    + System.lineSeparator()
-                    + Arrays.toString(e.getStackTrace()));
+            ExceptionHandler.printGeneralException("Error in readFile function in FileHandler class", e);
             return null;
         }
     }
