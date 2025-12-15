@@ -12,39 +12,35 @@ public class CashRegister {
 
     public void givePaycheck(Employee emp) {
       try {
-          if (balance < balance - emp.calculatePaycheck()) {
+          if (balance < balance - emp.calculatePaycheck())
               throw new ArithmeticException();
-          }
-
           balance -= emp.calculatePaycheck();
       }
-
       catch (ArithmeticException e) {
-          //printstack;
+          ExceptionHandler.printStackedError(e);
       }
-
+      catch (Exception e) {
+          ExceptionHandler.printGeneralException("Error in givePaycheck function in CashRegister class", e);
+      }
     }
 
     public void givePaychecks() {
         try {
             for (Employee emp : Restaurant.getEmployeeList()) {
-
-                if (balance < balance - emp.calculatePaycheck()) {
+                if (balance < balance - emp.calculatePaycheck())
                     throw new ArithmeticException();
-                }
-
                 balance -= emp.calculatePaycheck();
             }
         }
-
         catch (ArithmeticException e) {
-            //printstack;
+            ExceptionHandler.printStackedError(e);
         }
-
+        catch (Exception e) {
+            ExceptionHandler.printGeneralException("Error in givePaychecks function in CashRegister class", e);
+        }
     }
 
     public double calculateEarnings() {
-
         balance += earnings;
         return earnings;
     }
