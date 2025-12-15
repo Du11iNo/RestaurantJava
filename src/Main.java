@@ -17,18 +17,25 @@ public class Main {
         Restaurant.setReservation(1, LocalDate.of(2030,1,2));
 
         Restaurant.addFoodAtTable(1, "Lobster", 2);
-        SummerDine.addFoodAtTable(1, "Chicken", 3);
-        SummerDine.addFoodAtTable(1, "Lobster", 1);
+        Restaurant.addFoodAtTable(1, "Chicken", 3);
+        Restaurant.addFoodAtTable(1, "Lobster", 1);
         System.out.println(Menu.getMenu());
-        System.out.println(SummerDine.getTable(1).generateReceipt());
+        System.out.println(Restaurant.getTable(1).generateReceipt());
 
-        System.out.println(SummerDine.getTable(1));
+        System.out.println(Restaurant.getTable(1));
 
         System.out.println("");
 
         for (String line: FileHandler.readFile("test.txt")){
             System.out.println(line);
         }
+
+        Restaurant.printEmployeeList();
+
+        Waiter.Hire("12","123",LocalDate.of(2000,1,1));
+        Chef.Hire("1","Qazim",LocalDate.of(2027,2,2), Chef.Qualifications.HeadChef);
+        Cleaner.Hire("3","Bedrie",LocalDate.of(2002,3,3));
+        Restaurant.printEmployeeList();
 
     }
 }
