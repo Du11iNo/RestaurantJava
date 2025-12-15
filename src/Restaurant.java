@@ -38,11 +38,11 @@ public class Restaurant {
         }
 
         catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage() + System.lineSeparator() + Arrays.toString(e.getStackTrace()));
+            System.err.println(e.getMessage());
             return false;
         }
         catch (Exception e) {
-            System.err.println("Error in Add to TableList: " + e.getMessage());
+            ExceptionHandler.printGeneralException("Error in Add to TableList: ", e);
             return false;
         }
     }
@@ -71,7 +71,7 @@ public class Restaurant {
             return null;
         }
         catch (Exception e) {
-            System.err.println("Error in getTable function in Table" + System.lineSeparator() + Arrays.toString(e.getStackTrace()));
+            ExceptionHandler.printGeneralException("Error in getTable function in Table", e);
             return null;
         }
     }
@@ -98,9 +98,7 @@ public class Restaurant {
             return false;
         }
         catch (Exception e) {
-            System.err.println("Error in setReservation function in Restaurant class"
-                    + System.lineSeparator()
-                    + Arrays.toString(e.getStackTrace()));
+            ExceptionHandler.printGeneralException("Error in setReservation function in Restaurant class", e);
             return false;
         }
     }
@@ -121,9 +119,7 @@ public class Restaurant {
             return false;
         }
         catch (Exception e) {
-            System.err.println("Error in addFoodToTable function in Restaurant class"
-                    + System.lineSeparator()
-                    + Arrays.toString(e.getStackTrace()));
+            ExceptionHandler.printGeneralException("Error in addFoodToTable function in Restaurant class", e);
             return false;
         }
     }
