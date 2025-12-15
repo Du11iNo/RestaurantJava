@@ -3,9 +3,19 @@ import java.time.*;
 
 public class Waiter extends Employee {
 
+    private double bonus = 0.0;
+
     public Waiter(String nid, String nameSurname, LocalDate birthday) {
         super(nid, nameSurname, birthday);
         paycheck = 500.0;
+    }
+
+    public double getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(double bonus) {
+        this.bonus = bonus;
     }
 
     public static boolean Hire(String NID, String nameSurname, LocalDate birthdate) {
@@ -25,6 +35,11 @@ public class Waiter extends Employee {
             ExceptionHandler.printGeneralException("Error in Hire function in Waiter Class", e);
             return false;
         }
+    }
+
+    @Override
+    public double calculatePaycheck() {
+        return paycheck + getBonus();
     }
 
     @Override

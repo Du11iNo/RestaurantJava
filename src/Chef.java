@@ -15,7 +15,11 @@ public class Chef extends Employee{
     public Chef(String nid, String nameSurname, LocalDate birthday, Qualifications qualification) {
         super(nid, nameSurname, birthday);
         this.qualification = qualification;
-        this.paycheck = 1200.0;
+        this.paycheck = 900.0;
+    }
+
+    public Qualifications getQualification() {
+        return qualification;
     }
 
     public static boolean Hire(String NID, String nameSurname, LocalDate birthdate, Qualifications qualification) {
@@ -35,6 +39,15 @@ public class Chef extends Employee{
             ExceptionHandler.printGeneralException("Error in Hire function in Chef Class", e);
             return false;
         }
+    }
+
+    @Override
+    public double calculatePaycheck() {
+        return switch (getQualification()) {
+            case Qualifications.HeadChef -> paycheck + 300;
+            case Qualifications.SousChef -> paycheck + 100;
+            default -> paycheck;
+        };
     }
 
     @Override

@@ -54,6 +54,10 @@ public abstract class Employee {
         return false;
     }
 
+    public double calculatePaycheck(){
+        return paycheck;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
