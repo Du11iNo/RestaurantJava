@@ -27,7 +27,7 @@ public class Table {
         try {
             //Don't allow quantities below or equal to 0
             if (quantity <= 0)
-                return false;
+                throw new IllegalArgumentException("Given Quantity is lower than 0");
 
             //Set to taken (Adding orders to a table means the table has been taken and orders have been made)
             if (!this.isTaken)
@@ -56,7 +56,17 @@ public class Table {
             return true;
         }
         catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            StackTraceElement[] el = e.getStackTrace();
+
+            System.err.println("Error in:");
+            for (StackTraceElement trackEl: el) {
+                System.err.printf("%s%s.%s in line %d\n",
+                        " ".repeat(5),
+                        trackEl.getClassName(),
+                        trackEl.getMethodName(),
+                        trackEl.getLineNumber());
+            }
+            System.err.println(" ".repeat(5) + "-Context" + e.getMessage());
             return false;
         }
         catch (Exception e) {
