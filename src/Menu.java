@@ -32,12 +32,17 @@ public class Menu {
             return true;
         }
         catch (IllegalArgumentException e) {
-            StackTraceElement el = e.getStackTrace()[1];
-            System.err.printf("Error in %s.%s, line %d: %s \n",
-                    el.getClassName(),
-                    el.getMethodName(),
-                    el.getLineNumber(),
-                    e.getMessage());
+            StackTraceElement[] el = e.getStackTrace();
+            System.err.println("Error in:");
+
+            for (StackTraceElement traceEl : el) {
+                System.err.printf("%s%s.%s in line %d\n",
+                        " ".repeat(5),
+                        traceEl.getClassName(),
+                        traceEl.getMethodName(),
+                        traceEl.getLineNumber());
+            }
+            System.err.println(" ".repeat(5) + "-Context: " + e.getMessage());
             return false;
         }
         catch (Exception e) {
