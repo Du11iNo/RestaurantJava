@@ -28,11 +28,18 @@ public class Chef extends Employee{
             return true;
         }
         catch (DateTimeException e) {
-            ExceptionHandler.printStackedError(e);
-            return false;
-        }
-        catch (Exception e) {
-            ExceptionHandler.printGeneralException("Error in Hire function in Chef Class", e);
+            StackTraceElement[] el = e.getStackTrace();
+
+            System.err.println("Error in:");
+            for(StackTraceElement traceEl: el){
+                System.err.printf("%s%s.%s in line %d\n",
+                        " ".repeat(5),
+                        traceEl.getClassName(),
+                        traceEl.getMethodName(),
+                        traceEl.getLineNumber());
+            }
+            System.err.println(" ".repeat(5) + "-Context: " + e.getMessage());
+
             return false;
         }
     }
