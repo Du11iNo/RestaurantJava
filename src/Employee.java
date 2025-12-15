@@ -50,8 +50,8 @@ public abstract class Employee {
         this.paycheck = paycheck;
     }
 
-    public static boolean Hire(String NID, String nameSurname, LocalDate birthdate) {
-        return false;
+    public static void Hire(String NID, String nameSurname, LocalDate birthdate) {
+        return;
     }
 
     public double calculatePaycheck(){

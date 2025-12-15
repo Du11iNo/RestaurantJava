@@ -22,22 +22,22 @@ public class Chef extends Employee{
         return qualification;
     }
 
-    public static boolean Hire(String NID, String nameSurname, LocalDate birthdate, Qualifications qualification) {
+    public static void Hire(String NID, String nameSurname, LocalDate birthdate, Qualifications qualification) {
         try {
             //Don't allow birthdates after present time; Same for other roles
             if (birthdate.isAfter(LocalDate.now()))
                 throw new DateTimeException("Given date is after present date");
 
             Restaurant.getEmployeeList().add(new Chef(NID, nameSurname, birthdate, qualification));
-            return true;
+            Restaurant.writeEmployeeFile();
         }
         catch (DateTimeException e) {
             ExceptionHandler.printStackedError(e);
-            return false;
+            return;
         }
         catch (Exception e) {
             ExceptionHandler.printGeneralException("Error in Hire function in Chef Class", e);
-            return false;
+            return;
         }
     }
 
