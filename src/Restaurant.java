@@ -6,10 +6,10 @@ import java.util.Arrays;
 //Contains all main functions
 public class Restaurant {
 
-    private ArrayList<Employee> employeeList = new ArrayList<>(); //Contains all employees
-    private ArrayList<Table> tableList = new ArrayList<>(); //Contains all tables
+    private static ArrayList<Employee> employeeList = new ArrayList<>(); //Contains all employees
+    private static ArrayList<Table> tableList = new ArrayList<>(); //Contains all tables
 
-    public boolean fireEmployee(String nid){
+    public static boolean fireEmployee(String nid){
 
         //Find employee in list & remove it
         for (Employee employee: employeeList){
@@ -21,9 +21,9 @@ public class Restaurant {
         return false;
     }
 
-    public boolean addWaiter(String NID, String nameSurname, LocalDate birthdate) {
+    public static boolean addWaiter(String NID, String nameSurname, LocalDate birthdate) {
         try {
-            //Dont allow birthdates after present time; Same for other roles
+            //Don't allow birthdates after present time; Same for other roles
             if (birthdate.isAfter(LocalDate.now()))
                 throw new DateTimeException("Given date is after present date");
 
@@ -45,9 +45,9 @@ public class Restaurant {
             return false;
         }
     }
-    public boolean addChef(String NID, String nameSurname, LocalDate birthdate) {
+    public static boolean addChef(String NID, String nameSurname, LocalDate birthdate) {
         try {
-            //Dont allow birthdates after present time; Same for other roles
+            //Don't allow birthdates after present time; Same for other roles
             if (birthdate.isAfter(LocalDate.now()))
                 throw new DateTimeException("Given date is after present date");
 
@@ -71,9 +71,9 @@ public class Restaurant {
         }
     }
 
-    public boolean addCleaner(String NID, String nameSurname, LocalDate birthdate) {
+    public static boolean addCleaner(String NID, String nameSurname, LocalDate birthdate) {
         try {
-            //Dont allow birthdates after present time; Same for other roles
+            //Don't allow birthdates after present time; Same for other roles
             if (birthdate.isAfter(LocalDate.now()))
                 throw new DateTimeException("Given date is after present date");
 
@@ -97,7 +97,7 @@ public class Restaurant {
         }
     }
 
-    public boolean addTable(int ID){
+    public static boolean addTable(int ID){
 
         try {
             //If table with ID exists, do not add to list
@@ -119,17 +119,17 @@ public class Restaurant {
         }
     }
 
-    public void printEmployeeList(){
+    public static void printEmployeeList(){
         for (Employee emp: employeeList)
             System.out.println(emp);
     }
 
-    public void printTables(){
+    public static void printTables(){
         for (Table tab: tableList)
             System.out.println(tab);
     }
 
-    public Table getTable(int ID){
+    public static Table getTable(int ID){
 
         try {
             //Check list for table with specified ID
@@ -148,12 +148,12 @@ public class Restaurant {
         }
     }
 
-    public void removeAllReservations(){
+    public static void removeAllReservations(){
         for (Table tab: tableList)
             tab.setReserved(false);
     }
 
-    public boolean setReservation(int ID, LocalDate date){
+    public static boolean setReservation(int ID, LocalDate date){
 
         try {
         //Find table with specified ID; Reserve for specified date
@@ -177,7 +177,7 @@ public class Restaurant {
         }
     }
 
-    public boolean addFoodAtTable(int ID, String Food, int Quantity){
+    public static boolean addFoodAtTable(int ID, String Food, int Quantity){
 
         try{
         //Add food in Table's Order list
@@ -201,7 +201,7 @@ public class Restaurant {
     }
 
     //Set isTaken for all tables to false unless it has reservation for today
-    public boolean setupTables(){
+    public static boolean setupTables(){
         for (Table tab: tableList) {
             tab.setTaken(tab.isReserved() && LocalDate.now().equals(tab.getReservationDate()));
         }

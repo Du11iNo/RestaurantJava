@@ -12,13 +12,11 @@ public class Main {
 
         Menu.addFoodToMenu("FantaCan", -5.0);
 
-        Restaurant SummerDine = new Restaurant();
+        Restaurant.addTable(1);
 
-        SummerDine.addTable(1);
+        Restaurant.setReservation(1, LocalDate.of(2030,1,2));
 
-        SummerDine.setReservation(1, LocalDate.of(2030,1,2));
-
-        SummerDine.addFoodAtTable(1, "Lobster", 2);
+        Restaurant.addFoodAtTable(1, "Lobster", 2);
         SummerDine.addFoodAtTable(1, "Chicken", 3);
         SummerDine.addFoodAtTable(1, "Lobster", 1);
         System.out.println(Menu.getMenu());
