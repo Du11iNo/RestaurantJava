@@ -1,7 +1,8 @@
 
-import java.util.ArrayList;
+import java.nio.file.Paths;
 import java.time.*;
 import java.util.Arrays;
+import java.util.*;
 
 //Contains all main functions
 public class Restaurant {
@@ -19,6 +20,7 @@ public class Restaurant {
         for (Employee employee: employeeList){
             if (employee.getNID().equals(nid)) {
                 employeeList.remove(employee);
+                writeEmployeeFile();
                 return true;
             }
         }
@@ -44,6 +46,35 @@ public class Restaurant {
         catch (Exception e) {
             ExceptionHandler.printGeneralException("Error in Add to TableList: ", e);
             return false;
+        }
+    }
+
+    public static void writeEmployeeFile() {
+        try {
+
+            String format = "%s/%s/%s/%s";
+            List lines = new ArrayList<String>();
+            lines.add("NID/NameSurname/DateOfStart/Role");
+
+            for (Employee emp: getEmployeeList()) {
+                String nid = emp.getNID();
+                String ns = emp.getNameSurname();
+                LocalDate start = emp.getDateOfStart();
+
+                lines.add(String.format(format,
+                                nid,
+                                ns,
+                                start.toString().replace("-", "."),
+                                emp.getClass().toString().substring(6)));
+            }
+
+            FileHandler.writeToFile("EmployeeList.txt", format, lines);
+        }
+        catch (NullPointerException e) {
+            ExceptionHandler.printStackedError(e);
+        }
+        catch (Exception e) {
+            ExceptionHandler.printGeneralException("Error in writeEmployeeFile function in Restaurant class", e);
         }
     }
 
