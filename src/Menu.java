@@ -32,23 +32,11 @@ public class Menu {
             return true;
         }
         catch (IllegalArgumentException e) {
-            StackTraceElement[] el = e.getStackTrace();
-            System.err.println("Error in:");
-
-            for (StackTraceElement traceEl : el) {
-                System.err.printf("%s%s.%s in line %d\n",
-                        " ".repeat(5),
-                        traceEl.getClassName(),
-                        traceEl.getMethodName(),
-                        traceEl.getLineNumber());
-            }
-            System.err.println(" ".repeat(5) + "-Context: " + e.getMessage());
+            ExceptionHandler.printStackedError(e);
             return false;
         }
         catch (Exception e) {
-            System.err.println("Error in addFoodToMenu function in Menu class"
-                    + System.lineSeparator()
-                    + Arrays.toString(e.getStackTrace()));
+            ExceptionHandler.printGeneralException("Error in addFoodToMenu function in Menu class", e);
             return false;
         }
     }
@@ -69,9 +57,7 @@ public class Menu {
             return false;
         }
         catch (Exception e) {
-            System.err.println("Error in removeFoodFromMenu function in Menu class"
-                    + System.lineSeparator()
-                    + Arrays.toString(e.getStackTrace()));
+            ExceptionHandler.printGeneralException("Error in removeFoodFromMenu function in Menu class", e);
             return false;
         }
     }

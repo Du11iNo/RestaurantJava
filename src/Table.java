@@ -56,23 +56,11 @@ public class Table {
             return true;
         }
         catch (IllegalArgumentException e) {
-            StackTraceElement[] el = e.getStackTrace();
-
-            System.err.println("Error in:");
-            for (StackTraceElement trackEl: el) {
-                System.err.printf("%s%s.%s in line %d\n",
-                        " ".repeat(5),
-                        trackEl.getClassName(),
-                        trackEl.getMethodName(),
-                        trackEl.getLineNumber());
-            }
-            System.err.println(" ".repeat(5) + "-Context" + e.getMessage());
+            ExceptionHandler.printStackedError(e);
             return false;
         }
         catch (Exception e) {
-            System.err.println("Error in addOrder function in Table class"
-                    + System.lineSeparator()
-                    + Arrays.toString(e.getStackTrace()));
+            ExceptionHandler.printGeneralException("Error in addOrder function in Table class", e);
             return false;
         }
     }
