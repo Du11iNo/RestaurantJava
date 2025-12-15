@@ -1,9 +1,10 @@
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
-import java.nio.*;
+
 public class FileHandler {
 
     public static String[] readFile(String filename) {
@@ -19,6 +20,19 @@ public class FileHandler {
         catch (Exception e) {
             ExceptionHandler.printGeneralException("Error in readFile function in FileHandler class", e);
             return null;
+        }
+    }
+
+    public static void writeToFile(String filename, String format, List lines) {
+
+        try {
+            Files.write(Paths.get(filename), lines);
+        }
+        catch (IOException e) {
+            ExceptionHandler.printStackedError(e);
+        }
+        catch (Exception e) {
+            ExceptionHandler.printGeneralException("Error in writeEmployeeFile function in FileHandler class", e);
         }
     }
 }
