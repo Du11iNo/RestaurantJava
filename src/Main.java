@@ -6,11 +6,16 @@ public class Main {
 
     public static void main(String[] args){
 
-        Menu.addFoodToMenu("Lobster", 24.0);
+        //Menu.addFoodToMenu("Lobster", 24.0);
+        //Menu.addFoodToMenu("Chicken", 17.0);
+        //Menu.addFoodToMenu("FantaCan", -5.0);
 
-        Menu.addFoodToMenu("Chicken", 17.0);
+        System.out.println("Menu before read: ");
+        Menu.printMenu();
+        Menu.readMenuFromFile();
+        System.out.println("Menu after read: ");
+        Menu.printMenu();
 
-        Menu.addFoodToMenu("FantaCan", -5.0);
 
         Restaurant.addTable(1);
 
@@ -19,7 +24,7 @@ public class Main {
         Restaurant.addFoodAtTable(1, "Lobster", 2);
         Restaurant.addFoodAtTable(1, "Chicken", 3);
         Restaurant.addFoodAtTable(1, "Lobster", 1);
-        System.out.println(Menu.getMenu());
+
         System.out.println(Restaurant.getTable(1).generateReceipt());
 
         System.out.println(Restaurant.getTable(1));
