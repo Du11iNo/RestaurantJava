@@ -9,7 +9,7 @@ public class Cleaner extends Employee{
         paycheck = 300.0;
     }
 
-    public static void Hire(String NID, String nameSurname, LocalDate birthdate) {
+    public static void hire(String NID, String nameSurname, LocalDate birthdate) {
         try {
             //Don't allow birthdates after present time; Same for other roles
             if (birthdate.isAfter(LocalDate.now()))
@@ -23,7 +23,7 @@ public class Cleaner extends Employee{
             return;
         }
         catch (Exception e) {
-            ExceptionHandler.printGeneralException("Error in Hire function in Cleaner Class", e);
+            ExceptionHandler.printGeneralException("Error in hire function in Cleaner Class", e);
             return;
         }
     }

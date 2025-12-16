@@ -18,7 +18,7 @@ public class Waiter extends Employee {
         this.bonus = bonus;
     }
 
-    public static void Hire(String NID, String nameSurname, LocalDate birthdate) {
+    public static void hire(String NID, String nameSurname, LocalDate birthdate) {
         try {
             //Don't allow birthdates after present time; Same for other roles
             if (birthdate.isAfter(LocalDate.now()))
@@ -32,7 +32,7 @@ public class Waiter extends Employee {
             return;
         }
         catch (Exception e) {
-            ExceptionHandler.printGeneralException("Error in Hire function in Waiter Class", e);
+            ExceptionHandler.printGeneralException("Error in hire function in Waiter Class", e);
             return;
         }
     }

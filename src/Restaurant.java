@@ -99,9 +99,9 @@ public class Restaurant {
             String role = part[3];
 
             switch (role) {
-                case "Waiter" -> Waiter.Hire(nid, ns, bd);
-                case "Cleaner" -> Cleaner.Hire(nid, ns, bd);
-                case "Chef" -> Chef.Hire(nid, ns, bd, Chef.Qualifications.valueOf(part[4]));
+                case "Waiter" -> Waiter.hire(nid, ns, bd);
+                case "Cleaner" -> Cleaner.hire(nid, ns, bd);
+                case "Chef" -> Chef.hire(nid, ns, bd, Chef.Qualifications.valueOf(part[4]));
             }
         }
         catch (NullPointerException e) {

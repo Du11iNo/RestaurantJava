@@ -50,7 +50,7 @@ public abstract class Employee {
         this.paycheck = paycheck;
     }
 
-    public static void Hire(String NID, String nameSurname, LocalDate birthdate) {
+    public static void hire(String NID, String nameSurname, LocalDate birthdate) {
         return;
     }
 

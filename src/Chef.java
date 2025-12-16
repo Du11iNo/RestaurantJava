@@ -22,7 +22,7 @@ public class Chef extends Employee{
         return qualification;
     }
 
-    public static void Hire(String NID, String nameSurname, LocalDate birthdate, Qualifications qualification) {
+    public static void hire(String NID, String nameSurname, LocalDate birthdate, Qualifications qualification) {
         try {
             //Don't allow birthdates after present time; Same for other roles
             if (birthdate.isAfter(LocalDate.now()))
@@ -36,7 +36,7 @@ public class Chef extends Employee{
             return;
         }
         catch (Exception e) {
-            ExceptionHandler.printGeneralException("Error in Hire function in Chef Class", e);
+            ExceptionHandler.printGeneralException("Error in hire function in Chef Class", e);
             return;
         }
     }
