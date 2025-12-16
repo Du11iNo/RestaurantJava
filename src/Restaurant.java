@@ -1,8 +1,5 @@
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.*;
-import java.util.Arrays;
 import java.util.*;
 
 //Contains all main functions
@@ -52,9 +49,8 @@ public class Restaurant {
 
     public static void writeEmployeeFile() {
         try {
-
             String format = "%s/%s/%s/%s";
-            List lines = new ArrayList<String>();
+            List<String> lines = new ArrayList<>();
             lines.add("NID/NameSurname/DateOfStart/Role/SubRole");
 
             for (Employee emp: getEmployeeList()) {
@@ -80,30 +76,38 @@ public class Restaurant {
     }
 
     public static void readEmployeeFile() {
-
         try {
-
             String[] lines = FileHandler.readFile("EmployeeList.txt");
-
-            for (int i = 1; i < lines.length; i++) {
-                String[] part = lines[i].split("/");
-                String nid = part[0];
-                String ns = part[1];
-                LocalDate bd = LocalDate.parse(part[2]);
-                String role = part[3];
-
-                switch (role) {
-                    case "Waiter" -> Waiter.Hire(nid, ns, bd);
-                    case "Cleaner" -> Cleaner.Hire(nid, ns, bd);
-                    case "Chef" -> Chef.Hire(nid, ns, bd, Chef.Qualifications.valueOf(part[4]));
-                }
-            }
+            for (int i = 1; i < lines.length; i++)
+                addEmployeeToList(lines[i]);
         }
         catch (NullPointerException e) {
             ExceptionHandler.printStackedError(e);
         }
         catch (Exception e) {
             ExceptionHandler.printGeneralException("Error in readEmployeeFile function of Restaurant class", e);
+        }
+    }
+
+    private static void addEmployeeToList(String line) {
+        try {
+            String[] part = line.split("/");
+            String nid = part[0];
+            String ns = part[1];
+            LocalDate bd = LocalDate.parse(part[2]);
+            String role = part[3];
+
+            switch (role) {
+                case "Waiter" -> Waiter.Hire(nid, ns, bd);
+                case "Cleaner" -> Cleaner.Hire(nid, ns, bd);
+                case "Chef" -> Chef.Hire(nid, ns, bd, Chef.Qualifications.valueOf(part[4]));
+            }
+        }
+        catch (NullPointerException e) {
+            ExceptionHandler.printStackedError(e);
+        }
+        catch (Exception e) {
+            ExceptionHandler.printGeneralException("Error in splitLine function in Restaurant class", e);
         }
     }
 
