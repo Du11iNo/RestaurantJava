@@ -32,9 +32,7 @@ public class Main {
 
         Restaurant.printEmployeeList();
 
-        Waiter.Hire("12","123",LocalDate.of(2000,1,1));
-        Chef.Hire("1","Qazim",LocalDate.of(2027,2,2), Chef.Qualifications.HeadChef);
-        Cleaner.Hire("3","Bedrie",LocalDate.of(2002,3,3));
+        Restaurant.readEmployeeFile();
         Restaurant.printEmployeeList();
 
     }
