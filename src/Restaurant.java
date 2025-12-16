@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.*;
 import java.util.Arrays;
@@ -54,18 +55,18 @@ public class Restaurant {
 
             String format = "%s/%s/%s/%s";
             List lines = new ArrayList<String>();
-            lines.add("NID/NameSurname/DateOfStart/Role");
+            lines.add("NID/NameSurname/DateOfStart/Role/SubRole");
 
             for (Employee emp: getEmployeeList()) {
                 String nid = emp.getNID();
                 String ns = emp.getNameSurname();
-                LocalDate start = emp.getDateOfStart();
+                LocalDate bd = emp.getBirthdate();
 
                 lines.add(String.format(format,
                                 nid,
                                 ns,
-                                start.toString().replace("-", "."),
-                                emp.getClass().toString().substring(6)));
+                                bd.toString(),
+                                emp instanceof Chef ? "Chef/" + (((Chef) emp).getQualification()).toString() : emp.getClass().toString().substring(6)));
             }
 
             FileHandler.writeToFile("EmployeeList.txt", format, lines);
@@ -75,6 +76,34 @@ public class Restaurant {
         }
         catch (Exception e) {
             ExceptionHandler.printGeneralException("Error in writeEmployeeFile function in Restaurant class", e);
+        }
+    }
+
+    public static void readEmployeeFile() {
+
+        try {
+
+            String[] lines = FileHandler.readFile("EmployeeList.txt");
+
+            for (int i = 1; i < lines.length; i++) {
+                String[] part = lines[i].split("/");
+                String nid = part[0];
+                String ns = part[1];
+                LocalDate bd = LocalDate.parse(part[2]);
+                String role = part[3];
+
+                switch (role) {
+                    case "Waiter" -> Waiter.Hire(nid, ns, bd);
+                    case "Cleaner" -> Cleaner.Hire(nid, ns, bd);
+                    case "Chef" -> Chef.Hire(nid, ns, bd, Chef.Qualifications.valueOf(part[4]));
+                }
+            }
+        }
+        catch (NullPointerException e) {
+            ExceptionHandler.printStackedError(e);
+        }
+        catch (Exception e) {
+            ExceptionHandler.printGeneralException("Error in readEmployeeFile function of Restaurant class", e);
         }
     }
 
