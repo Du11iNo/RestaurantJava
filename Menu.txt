@@ -1,3 +1,3 @@
 Product-Price
-lobster:24.00
-chicken:17.00
+lobster:17.00
+spaghetti:12.00
