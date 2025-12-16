@@ -7,6 +7,7 @@ public class Restaurant {
 
     private static ArrayList<Employee> employeeList = new ArrayList<>(); //Contains all employees
     private static ArrayList<Table> tableList = new ArrayList<>(); //Contains all tables
+    private static String filePath = "EmployeeList.txt";
 
     public static ArrayList<Employee> getEmployeeList() {
         return employeeList;
@@ -59,13 +60,13 @@ public class Restaurant {
                 LocalDate bd = emp.getBirthdate();
 
                 lines.add(String.format(format,
-                                nid,
-                                ns,
-                                bd.toString(),
-                                emp instanceof Chef ? "Chef/" + (((Chef) emp).getQualification()).toString() : emp.getClass().toString().substring(6)));
+                                nid, ns, bd.toString(),
+                                emp instanceof Chef ?
+                                        "Chef/" + (((Chef) emp).getQualification()).toString() :
+                                        emp.getClass().toString().substring(6)));
             }
 
-            FileHandler.writeToFile("EmployeeList.txt", format, lines);
+            FileHandler.writeToFile(filePath, format, lines);
         }
         catch (NullPointerException e) {
             ExceptionHandler.printStackedError(e);
@@ -77,7 +78,7 @@ public class Restaurant {
 
     public static void readEmployeeFile() {
         try {
-            String[] lines = FileHandler.readFile("EmployeeList.txt");
+            String[] lines = FileHandler.readFile(filePath);
             for (int i = 1; i < lines.length; i++)
                 addEmployeeToList(lines[i]);
         }
