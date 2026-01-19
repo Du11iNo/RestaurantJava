@@ -1,9 +1,6 @@
 
-import java.util.ArrayList;
+import java.util.*;
 import java.time.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 //Contains data related to specific table in Restaurant
 public class Table {
@@ -20,38 +17,38 @@ public class Table {
         this.ID = ID;
     }
 
+    public Set<Map.Entry<String, Integer>> getProductMap() {
+        return productMap.entrySet();
+    }
+
     public boolean addOrder(String orderName, int quantity){
 
         ArrayList<Product> menu = Menu.getMenu();
 
         try {
-            //Don't allow quantities below or equal to 0
+            // Don't allow quantities below or equal to 0
             if (quantity <= 0)
                 throw new IllegalArgumentException("Given Quantity is lower than 0");
 
-            //Set to taken (Adding orders to a table means the table has been taken and orders have been made)
+            // Normalize order name to lowercase
+            orderName = orderName.toLowerCase();
+
+            // Set to taken (Adding orders to a table means the table has been taken)
             if (!this.isTaken)
                 this.setTaken(true);
 
-            //Here we go now :(
-            for (Product product : menu) //For every Food in the Menu specified above
-                if (product.getName().equals(orderName)) { //Check if argument Order (OrderName) exists in Menu (Menu's Food List)
-                    if (productMap.containsKey(orderName))
-                        //Check if entry is already registered to OrderMap
-                        //then add the quantity
-                        productMap.replace(orderName, productMap.get(orderName) + quantity);
+            // For every product in the menu
+            for (Product product : menu) {
+                // Compare in lowercase
+                if (product.getName().toLowerCase().equals(orderName)) {
+                    // Add quantity if already exists, otherwise put new entry
+                    productMap.put(orderName,
+                            productMap.getOrDefault(orderName, 0) + quantity);
 
-                    /*
-                        Example:
-                            Person A in Table 1 ordered 3 Chicken plates
-                            Previously, he had ordered 1 Chicken plate
-                            In OrderMap -> {Chicken = 1 + 3}
-                    */
-
-                    else
-                        //Simply add entry
-                        productMap.put(orderName, quantity);
+                    // Stop loop after matching product
+                    break;
                 }
+            }
 
             return true;
         }
@@ -64,6 +61,7 @@ public class Table {
             return false;
         }
     }
+
 
     public StringBuilder generateReceipt() {
 
@@ -102,6 +100,7 @@ public class Table {
                 }
             }
 
+            CashRegister.addEarnings(total);
             receipt.append("Total: $" + total); //Add the total to receipt
 
             //Reset Table

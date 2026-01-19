@@ -122,6 +122,14 @@ public class Restaurant {
             System.out.println(tab);
     }
 
+    public static ArrayList<Table> getTableList() {
+        return tableList;
+    }
+
+    public static void setTableList(ArrayList<Table> tableList) {
+        Restaurant.tableList = tableList;
+    }
+
     public static Table getTable(int ID){
 
         try {
